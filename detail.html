@@ -1,0 +1,75 @@
+{% extends "tc/header.html" %}
+
+{% block content %}
+<script type="text/javascript">
+//<![CDATA[
+var mod = function(a, b) {
+  return ((a % b) + b) % b
+};
+
+var rotateCard = function(i) {
+  var sides = $('.selected.card').children();
+  var index = mod(sides.filter('.flip').index() + i, sides.size());
+  sides.removeClass('flip');
+  sides.eq(index).addClass('flip');
+};
+
+var switchCard = function(i) {
+  var cards = $('#cardstack').children();
+  var index = mod(cards.filter('.selected').index() + i, cards.size());
+  cards.removeClass('selected');
+  var selected = cards.eq(index);
+  selected.addClass('selected');
+  $('html, body').animate({
+    scrollTop: selected.offset().top + (selected.height() - $(window).height() / 2)
+  }, 200);
+};
+
+$(function() {
+  $('#cardstack').children().eq(0).addClass('selected');
+  $('.card').each(function(i, card) {
+    $(card).children().eq(0).addClass('flip');
+  });
+  $('.card').click(function() {
+    rotateCard(1);
+  })
+  $(document).keydown(function(e) {
+    switch(e.which) {
+      case 37: // left
+      rotateCard(-1);
+      break;
+      case 39: // right
+      rotateCard(1);
+      break;
+      case 38: // up
+      switchCard(-1);
+      break;
+      case 40: // down
+      switchCard(1);
+      break;
+      default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+  });
+});
+//]]>
+</script>
+<div id="cardstack">
+  {% for card in set.card_set.all %}
+  <div class="card">
+    <div class="side">
+      <span class="num">1</span>
+      <span class="value">{{ card.alpha }}</span>
+    </div>
+    <div class="side">
+      <span class="num">2</span>
+      <span class="value">{{ card.beta  }}</span>
+    </div>
+    <div class="side">
+      <span class="num">3</span>
+      <span class="value">{{ card.gamma }}</span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

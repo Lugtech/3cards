@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'tc/styles.css' %}" />
+<script type="text/javascript" src="{% static 'tc/jquery-2.1.3.min.js' %}"></script>
+<title>3cards</title>
+</head>
+<body>
+<div id="header">This is the header</div>
+<div id="content">
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

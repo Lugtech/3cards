@@ -1,0 +1,27 @@
+{% extends "tc/header.html" %}
+
+{% block content %}
+<script type="text/javascript">
+//<![CDATA[
+var addCard = function() {
+  var index = $('#form').children().size();
+  var id = 'd' + index;
+  $('#form').append('<tr id="' + id + '"></div>');
+  var i = 0;
+  $('#' + id).append('<td>' + index + ':&nbsp;&nbsp;</td>');
+  $('#' + id).append('<td><input type="text" name="c' + index + i++ + '" /></td>');
+  $('#' + id).append('<td><input type="text" name="c' + index + i++ + '" /></td>');
+  $('#' + id).append('<td><input type="text" name="c' + index + i++ + '" /></td>');
+};
+
+$(function() {
+  addCard();
+});
+//]]>
+</script>
+<form id="form" action="finalize" method="POST">
+  <table id="form">
+    
+  </table>
+</form>
+{% endblock %}
